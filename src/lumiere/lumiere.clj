@@ -1,6 +1,17 @@
 (ns lumiere.lumiere
   (:use [clojure.string :only [join]]))
 
+(declare black bg-black
+         red bg-red
+         green bg-green
+         yellow bg-yellow
+         blue bg-blue
+         magenta bg-magenta
+         cyan bg-cyan
+         white bg-white
+         default bg-default
+         bold italic underline)
+
 (def RESET "\033[0m")
 
 (defn- ansi-escape-seq [& codes]
@@ -17,7 +28,7 @@
     (cond
       (instance? String text) (Lumiere. text (:fg local-option-map) (:bg local-option-map) (:styles local-option-map))
       (instance? Lumiere text) (assoc text option value)
-      :else (throw (java.lang.IllegalArgumentException.)))))
+      :else (throw (IllegalArgumentException.)))))
 
 (defmacro defstyle [style-func-name ^Integer style-code]
   `(defn ~style-func-name [text#]
